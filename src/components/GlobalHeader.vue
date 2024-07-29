@@ -1,6 +1,6 @@
 <template>
   <div class="menu-demo">
-    <a-row class="grid-demo" style="margin-bottom: 16px" align="center">
+    <a-row class="grid-demo" align="center" :wrap="false">
       <a-col flex="auto">
         <a-menu
           mode="horizontal"
