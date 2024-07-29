@@ -1,9 +1,13 @@
 import { createStore } from "vuex";
+import user from "@/store/user";
 
+/**
+ * 全局状态管理配置文件
+ */
 export default createStore({
-  state: {},
-  getters: {},
   mutations: {},
   actions: {},
-  modules: {},
+  modules: {
+    user,
+  },
 });
