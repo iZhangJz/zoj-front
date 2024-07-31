@@ -26,6 +26,9 @@ export default {
         });
       }
     },
+    setLoginUser({ commit, state }, payload) {
+      commit("updateUser", payload);
+    },
   },
   mutations: {
     updateUser(state, payload) {
