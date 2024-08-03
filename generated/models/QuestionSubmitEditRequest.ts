@@ -2,16 +2,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type Post = {
-    content?: string;
+import type { QuestionJudgeInfo } from './QuestionJudgeInfo';
+export type QuestionSubmitEditRequest = {
+    code?: string;
     createTime?: string;
-    favourNum?: number;
     id?: number;
     isDelete?: number;
-    tags?: string;
-    thumbNum?: number;
-    title?: string;
+    judgeInfo?: QuestionJudgeInfo;
+    language?: string;
+    status?: number;
     updateTime?: string;
-    userId?: number;
 };
 

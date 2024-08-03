@@ -2,7 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type PostFavourAddRequest = {
-    postId?: number;
+export type QuestionJudgeConfig = {
+    memoryLimit?: number;
+    timeLimit?: number;
 };
 

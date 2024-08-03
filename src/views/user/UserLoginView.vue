@@ -55,7 +55,7 @@ const form = reactive({
  */
 const handleSubmit = async () => {
   const res = await UserControllerService.userLoginUsingPost(form);
-  if (res.code === 0) {
+  if (res.code === 200) {
     await store.dispatch("user/setLoginUser", res.data);
     await router.push({ path: "/", replace: true });
   } else {

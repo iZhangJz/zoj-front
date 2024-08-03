@@ -63,7 +63,7 @@ const form = reactive({
  */
 const handleSubmit = async () => {
   const res = await UserControllerService.userRegisterUsingPost(form);
-  if (res.code === 0) {
+  if (res.code === 200) {
     Message.success("注册成功");
     await router.push({ path: "/user/login", replace: true });
   } else {

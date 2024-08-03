@@ -1,11 +1,11 @@
 import { RouteRecordRaw } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
-import AdminView from "@/views/AdminView.vue";
 import { ACCESS_ROLE_ENUM } from "@/enum/CommonEnum";
 import NoAuthorityView from "@/views/NoAuthorityView.vue";
 import UserLayout from "@/layouts/UserLayout.vue";
 import UserLoginView from "@/views/user/UserLoginView.vue";
 import UserRegisterView from "@/views/user/UserRegisterView.vue";
+import AddQuesView from "@/views/question/AddQuesView.vue";
 
 /**
  * 路由配置文件
@@ -31,9 +31,9 @@ export const routes: Array<RouteRecordRaw> = [
     component: NoAuthorityView,
   },
   {
-    path: "/admin",
-    name: "管理",
-    component: AdminView,
+    path: "/admin/question/add",
+    name: "创建题目",
+    component: AddQuesView,
     meta: {
       access: [ACCESS_ROLE_ENUM.ADMIN],
     },
