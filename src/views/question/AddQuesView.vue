@@ -128,46 +128,119 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { reactive, withDefaults, defineProps, watchEffect, ref } from "vue";
 import MdEditor from "@/components/MdEditor.vue";
 import {
   QuestionAddRequest,
   QuestionControllerService,
 } from "../../../generated";
 import { Message } from "@arco-design/web-vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 /**
  * 创建题目表单数据
  */
-const questionForm = reactive({
+const questionForm = ref({
   title: "",
   content: "",
   answer: "",
   tags: [],
   judgeCase: [{ input: "", output: "" }],
   judgeConfig: { memoryLimit: 1000, timeLimit: 1000 },
-}) as QuestionAddRequest;
+} as QuestionAddRequest);
+
+/**
+ * 题目Id参数
+ */
+interface Props {
+  questionId: number;
+}
+const props = withDefaults(defineProps<Props>(), {
+  questionId: () => -1,
+});
 
 /**
  * 提交表单函数
  */
 const handleSubmit = async () => {
-  const res = await QuestionControllerService.addQuestionUsingPost(
-    questionForm
-  );
-  if (res.code === 200) {
-    Message.success("新增题目成功");
+  let res;
+  if (props.questionId < 0) {
+    res = await QuestionControllerService.addQuestionUsingPost(
+      questionForm.value
+    );
+    if (res.code === 200) {
+      Message.success("新增题目成功");
+      // 表单置空
+      questionForm.value = {
+        ...questionForm.value,
+        title: "",
+        content: "",
+        answer: "",
+        tags: [],
+        judgeCase: [{ input: "", output: "" }],
+        judgeConfig: { memoryLimit: 1000, timeLimit: 1000 },
+      };
+    } else {
+      Message.error("新增题目失败," + res.message);
+    }
   } else {
-    Message.error("新增题目失败," + res.message);
+    res = await QuestionControllerService.editQuestionUsingPost(
+      questionForm.value
+    );
+    if (res.code === 200) {
+      Message.success("编辑题目成功, 正在跳转到题目管理页...");
+      setTimeout(() => {
+        router.push("/admin/question/manage");
+      }, 3000);
+    } else {
+      Message.error("编辑题目失败," + res.message);
+    }
   }
 };
+
+/**
+ * 题目数据加载
+ */
+const loadData = async () => {
+  if (!props.questionId || props.questionId < 0) {
+    return;
+  }
+  const res = await QuestionControllerService.getQuestionVoByIdUsingGet(
+    props.questionId
+  );
+  if (res.code === 200) {
+    questionForm.value = {
+      ...res.data,
+      judgeConfig: {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        timeLimit: parseInt(res.data?.judgeConfig?.timeLimit, 10),
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        memoryLimit: parseInt(res.data?.judgeConfig?.memoryLimit, 10),
+      },
+    };
+    if (!questionForm.value.judgeCase) {
+      questionForm.value.judgeCase = [];
+    }
+  } else {
+    Message.error("获取题目数据失败," + res.message);
+  }
+};
+
+watchEffect(() => {
+  console.log("questionId", props.questionId);
+  loadData();
+});
 
 /**
  * 新增测试用例
  */
 const handleAdd = () => {
-  if (questionForm.judgeCase) {
-    questionForm.judgeCase.push({
+  if (questionForm.value.judgeCase) {
+    questionForm.value.judgeCase.push({
       input: "",
       output: "",
     });
@@ -178,8 +251,8 @@ const handleAdd = () => {
  * @param index 用例下标索引
  */
 const handleDelete = (index: number) => {
-  if (questionForm.judgeCase) {
-    questionForm.judgeCase.splice(index, 1);
+  if (questionForm.value.judgeCase) {
+    questionForm.value.judgeCase.splice(index, 1);
   }
 };
 </script>

@@ -6,6 +6,7 @@ import UserLayout from "@/layouts/UserLayout.vue";
 import UserLoginView from "@/views/user/UserLoginView.vue";
 import UserRegisterView from "@/views/user/UserRegisterView.vue";
 import AddQuesView from "@/views/question/AddQuesView.vue";
+import ManageQuesView from "@/views/question/ManageQuesView.vue";
 
 /**
  * 路由配置文件
@@ -32,8 +33,26 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/admin/question/add",
-    name: "创建题目",
+    name: "题目创建",
     component: AddQuesView,
+    meta: {
+      access: [ACCESS_ROLE_ENUM.ADMIN],
+    },
+  },
+  {
+    path: "/admin/question/edit/:questionId",
+    name: "题目修改",
+    component: AddQuesView,
+    props: true,
+    meta: {
+      hideInMenu: true,
+      access: [ACCESS_ROLE_ENUM.ADMIN],
+    },
+  },
+  {
+    path: "/admin/question/manage",
+    name: "题目管理",
+    component: ManageQuesView,
     meta: {
       access: [ACCESS_ROLE_ENUM.ADMIN],
     },
