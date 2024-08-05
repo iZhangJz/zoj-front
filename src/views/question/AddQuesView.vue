@@ -19,6 +19,11 @@
       </a-form-item>
       <a-form-item label="题目描述">
         <MdEditor
+          @click="
+            contentZIndex = 2;
+            answerZIndex = 1;
+          "
+          :zindex="contentZIndex"
           :value="questionForm.content"
           :handle-change="
             (val) => {
@@ -29,6 +34,11 @@
       </a-form-item>
       <a-form-item label="答案">
         <MdEditor
+          @click="
+            contentZIndex = 1;
+            answerZIndex = 2;
+          "
+          :zindex="answerZIndex"
           :value="questionForm.answer"
           :handle-change="
             (val) => {
@@ -128,7 +138,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, withDefaults, defineProps, watchEffect, ref } from "vue";
+import { withDefaults, defineProps, watchEffect, ref } from "vue";
 import MdEditor from "@/components/MdEditor.vue";
 import {
   QuestionAddRequest,
@@ -138,13 +148,28 @@ import { Message } from "@arco-design/web-vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const contentSample = ref(
+  "## 题目描述\n" +
+    " 这是你的题目的主要描述\n" +
+    "## 测试用例\n" +
+    "### 示例 1\n" +
+    "**输入** ：\n" +
+    "**输出**：\n" +
+    "### 示例 2\n" +
+    "**输入** ：\n" +
+    "**输出**：\n" +
+    "## 提示"
+);
+
+const contentZIndex = ref(1);
+const answerZIndex = ref(1);
 
 /**
  * 创建题目表单数据
  */
 const questionForm = ref({
   title: "",
-  content: "",
+  content: contentSample.value,
   answer: "",
   tags: [],
   judgeCase: [{ input: "", output: "" }],

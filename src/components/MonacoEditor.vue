@@ -42,7 +42,7 @@ onMounted(() => {
   editor.value = monaco.editor.create(codeEditorRef.value, {
     value: props.value,
     language: "java",
-    theme: "vs", // 主题
+    theme: "vs-dark", // 主题
     automaticLayout: true, // 自动布局
     tabSize: 2, // tab 缩进空格数
     fontSize: 14, // 字体大小
@@ -58,14 +58,5 @@ onMounted(() => {
   editor.value.onDidChangeModelContent(() => {
     props.handleChange(toRaw(editor.value).getValue());
   });
-
-  // 在组件销毁之前释放编辑器资源
-  onBeforeUnmount(() => {
-    if (editor.value) {
-      editor.value.dispose();
-    }
-  });
 });
 </script>
-
-<style scoped></style>

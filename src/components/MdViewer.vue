@@ -4,19 +4,13 @@
   @Viewer: 渲染页面
    -->
 <template>
-  <Editor
-    :style="`z-index: ${zindex}`"
-    :value="value"
-    :mode="mode"
-    :plugins="plugins"
-    @change="handleChange"
-  />
+  <Viewer :value="value" :plugins="plugins" />
 </template>
 
 <script setup lang="ts">
 import gfm from "@bytemd/plugin-gfm";
 import highlight from "@bytemd/plugin-highlight";
-import { Editor } from "@bytemd/vue-next";
+import { Viewer } from "@bytemd/vue-next";
 import { defineProps, withDefaults } from "vue";
 
 const plugins = [
@@ -29,22 +23,14 @@ const plugins = [
  * 定义编辑器组件的属性
  */
 interface EditorProps {
-  zindex: number; // 设置图层优先级
   value: string;
-  handleChange: (val: string) => void;
-  mode?: string;
 }
 
 /**
  * 定义属性默认值
  */
 const props = withDefaults(defineProps<EditorProps>(), {
-  zindex: () => 0,
   value: () => "",
-  mode: () => "split",
-  handleChange: (val: string) => {
-    console.log(val);
-  },
 });
 </script>
 
