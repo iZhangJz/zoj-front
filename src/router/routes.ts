@@ -7,6 +7,7 @@ import UserLoginView from "@/views/user/UserLoginView.vue";
 import UserRegisterView from "@/views/user/UserRegisterView.vue";
 import AddQuesView from "@/views/question/AddQuesView.vue";
 import ManageQuesView from "@/views/question/ManageQuesView.vue";
+import DoQuestionView from "@/views/question/DoQuestionView.vue";
 
 /**
  * 路由配置文件
@@ -47,6 +48,15 @@ export const routes: Array<RouteRecordRaw> = [
     meta: {
       hideInMenu: true,
       access: [ACCESS_ROLE_ENUM.ADMIN],
+    },
+  },
+  {
+    path: "/question/do/:questionId",
+    name: "答题",
+    component: DoQuestionView,
+    props: true,
+    meta: {
+      hideInMenu: true,
     },
   },
   {
