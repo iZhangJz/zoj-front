@@ -17,6 +17,9 @@
 import gfm from "@bytemd/plugin-gfm";
 import highlight from "@bytemd/plugin-highlight";
 import { Editor } from "@bytemd/vue-next";
+import "bytemd/dist/index.css";
+import "highlight.js/styles/default.css";
+import "github-markdown-css/github-markdown-light.css";
 import { defineProps, withDefaults } from "vue";
 
 const plugins = [
@@ -29,7 +32,7 @@ const plugins = [
  * 定义编辑器组件的属性
  */
 interface EditorProps {
-  zindex: number; // 设置图层优先级
+  zindex?: number; // 设置图层优先级
   value: string;
   handleChange: (val: string) => void;
   mode?: string;
@@ -39,7 +42,7 @@ interface EditorProps {
  * 定义属性默认值
  */
 const props = withDefaults(defineProps<EditorProps>(), {
-  zindex: () => 0,
+  zindex: () => 1,
   value: () => "",
   mode: () => "split",
   handleChange: (val: string) => {

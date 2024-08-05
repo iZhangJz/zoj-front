@@ -4,9 +4,9 @@
 /* eslint-disable */
 import type { QuestionJudgeCase } from './QuestionJudgeCase';
 import type { QuestionJudgeConfig } from './QuestionJudgeConfig';
-import type { UserVO } from './UserVO';
 export type QuestionVO = {
     acceptedNum?: number;
+    answer?: string;
     content?: string;
     createTime?: string;
     favourNum?: number;
@@ -18,7 +18,6 @@ export type QuestionVO = {
     thumbNum?: number;
     title?: string;
     updateTime?: string;
-    user?: UserVO;
     userId?: number;
 };
 

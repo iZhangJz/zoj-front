@@ -1,24 +1,19 @@
 <!-- 代码编辑器 -->
 <template>
-  <div id="editor" ref="codeEditorRef" style="min-height: 400px"></div>
+  <div id="editor" ref="codeEditorRef" style="min-height: 565px"></div>
 </template>
 
 <script setup lang="ts">
-import {
-  onMounted,
-  ref,
-  toRaw,
-  withDefaults,
-  defineProps,
-  onBeforeUnmount,
-} from "vue";
+import { onMounted, ref, toRaw, withDefaults, defineProps, watch } from "vue";
 import * as monaco from "monaco-editor";
+import { PROGRAMMING_LANGUAGE_MAP } from "@/enum/CommonEnum";
 
 /**
  * 定义组件属性类型
  */
 interface Props {
   value: string;
+  language?: string;
   handleChange: (v: string) => void;
 }
 
@@ -27,6 +22,7 @@ interface Props {
  */
 const props = withDefaults(defineProps<Props>(), {
   value: () => "",
+  language: () => PROGRAMMING_LANGUAGE_MAP.Java,
   handleChange: (val: string) => {
     console.log(val);
   },
@@ -34,6 +30,19 @@ const props = withDefaults(defineProps<Props>(), {
 
 const codeEditorRef = ref();
 const editor = ref();
+
+/**
+ * 设置语言
+ */
+watch(
+  () => props.language,
+  () => {
+    monaco.editor.setModelLanguage(
+      toRaw(editor.value).getModel(),
+      props.language
+    );
+  }
+);
 
 onMounted(() => {
   if (!codeEditorRef.value) {

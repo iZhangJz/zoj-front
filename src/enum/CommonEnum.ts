@@ -9,6 +9,16 @@ export const ACCESS_ROLE_ENUM = {
 };
 
 /**
+ * 编程语言
+ */
+
+export const PROGRAMMING_LANGUAGE_MAP: { [key: string]: string } = {
+  Java: "java",
+  Golang: "go",
+  Cpp: "cpp",
+};
+
+/**
  * 审核状态枚举
  */
 export const REVIEW_STATUS_MAP: { [key: number]: string } = {

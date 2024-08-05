@@ -150,15 +150,42 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const contentSample = ref(
   "## 题目描述\n" +
-    " 这是你的题目的主要描述\n" +
+    " 给你一个字符串数组，请你将 字母异位词 组合在一起。可以按任意顺序返回结果列表。\n" +
+    "\n" +
+    "字母异位词 是由重新排列源单词的所有字母得到的一个新单词。\n" +
     "## 测试用例\n" +
     "### 示例 1\n" +
-    "**输入** ：\n" +
-    "**输出**：\n" +
+    '&emsp;**输入** ：```strs = ["eat", "tea", "tan", "ate", "nat", "bat"]```<br />\n' +
+    '&emsp;**输出**： ```[["bat"],["nat","tan"],["ate","eat","tea"]]```\n' +
     "### 示例 2\n" +
-    "**输入** ：\n" +
-    "**输出**：\n" +
-    "## 提示"
+    '&emsp;**输入** ：```strs = [""]```<br />\n' +
+    '&emsp;**输出**：```[[""]]```\n' +
+    "## 提示\n" +
+    "- ```1 <= strs.length <= 104```\n" +
+    "- ```0 <= strs[i].length <= 100```\n" +
+    "- ```strs[i] 仅包含小写字母```\n"
+);
+const contentTemplate = ref(
+  "## 题目描述\n" +
+    "\n" +
+    "## 测试用例\n" +
+    "### 示例 1\n" +
+    "&emsp;**输入**：<br />\n" +
+    "&emsp;**输出**：\n" +
+    "### 示例 2\n" +
+    "&emsp;**输入**：<br />\n" +
+    "&emsp;**输出**：\n" +
+    "## 提示\n"
+);
+
+const answerSample = ref(
+  "```java(指定代码语言)\n" +
+    "public class HelloWorld {\n" +
+    "    public static void main(String[] args) {\n" +
+    '        System.out.println("Hello, World!");\n' +
+    "    }\n" +
+    "}\n" +
+    "```"
 );
 
 const contentZIndex = ref(1);
@@ -170,7 +197,7 @@ const answerZIndex = ref(1);
 const questionForm = ref({
   title: "",
   content: contentSample.value,
-  answer: "",
+  answer: answerSample.value,
   tags: [],
   judgeCase: [{ input: "", output: "" }],
   judgeConfig: { memoryLimit: 1000, timeLimit: 1000 },
@@ -201,7 +228,7 @@ const handleSubmit = async () => {
       questionForm.value = {
         ...questionForm.value,
         title: "",
-        content: "",
+        content: contentTemplate.value,
         answer: "",
         tags: [],
         judgeCase: [{ input: "", output: "" }],
