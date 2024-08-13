@@ -3,8 +3,8 @@
   <div id="doQuestionView">
     <a-row :gutter="[24, 24]">
       <a-col :span="12">
-        <a-tabs default-active-key="1">
-          <a-tab-pane key="1" title="题目">
+        <a-tabs :active-key="tapKey" @tab-click="handleTabClick">
+          <a-tab-pane :key="1" title="题目">
             <a-scrollbar style="height: 550px; overflow: auto">
               <a-card>
                 <template #title>
@@ -28,10 +28,10 @@
               </a-card>
             </a-scrollbar>
           </a-tab-pane>
-          <a-tab-pane key="2" title="评论" disabled>
+          <a-tab-pane :key="2" title="评论" disabled>
             Content of Tab Panel 2
           </a-tab-pane>
-          <a-tab-pane key="3" title="答案">
+          <a-tab-pane :key="3" title="答案">
             <a-card>
               <div v-if="hasLogin()">
                 <a
@@ -42,6 +42,48 @@
               </div>
               <div v-else>
                 <MdViewer :value="question?.answer" />
+              </div>
+            </a-card>
+          </a-tab-pane>
+          <a-tab-pane :key="4" title="提交结果" v-if="isSubmit">
+            <a-card>
+              <div v-if="!response">
+                <a-spin tip="运行中" />
+              </div>
+              <div v-else>
+                <a-form :model="response" label-align="left" auto-label-width>
+                  <a-form-item>
+                    <div v-if="response.message === 'Accepted'">
+                      <h2 style="color: forestgreen">{{ response.message }}</h2>
+                    </div>
+                    <div v-else>
+                      <h2 style="color: red">{{ response.message }}</h2>
+                    </div>
+                  </a-form-item>
+                  <a-form-item v-if="response.errorInput !== null">
+                    <h3>错误输入:{{ response.errorInput }}</h3>
+                  </a-form-item>
+                  <a-form-item v-if="response.errorInput !== null">
+                    <h3>错误输出:{{ response.errorOutput }}</h3>
+                  </a-form-item>
+                  <a-form-item v-if="response.errorInput !== null">
+                    <h3>正确输出:{{ response.correctOutput }}</h3>
+                  </a-form-item>
+                  <a-form-item>
+                    <div>
+                      <h3>用户提交代码</h3>
+                      <MdViewer
+                        :value="
+                          '```' +
+                          submitForm.language +
+                          '\n' +
+                          submitForm.code +
+                          '```'
+                        "
+                      />
+                    </div>
+                  </a-form-item>
+                </a-form>
               </div>
             </a-card>
           </a-tab-pane>
@@ -114,7 +156,10 @@ import MdViewer from "@/components/MdViewer.vue";
 import { useStore } from "vuex";
 import { ACCESS_ROLE_ENUM, PROGRAMMING_LANGUAGE_MAP } from "@/enum/CommonEnum";
 
+const tapKey = ref<number>(1);
+const isSubmit = ref(false);
 const question = ref<QuestionVO>();
+const response = ref();
 const store = useStore();
 const submitForm = ref({
   code: "",
@@ -129,6 +174,10 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   questionId: () => -1,
 });
+
+const handleTabClick = (key: number) => {
+  tapKey.value = key;
+};
 
 /**
  * 题目数据加载
@@ -148,6 +197,8 @@ const loadData = async () => {
 };
 
 const submitCode = async () => {
+  isSubmit.value = true;
+  tapKey.value = 4;
   if (!submitForm.value.code) {
     Message.error("请输入代码");
     return;
@@ -158,6 +209,7 @@ const submitCode = async () => {
   });
   if (res.code === 200) {
     Message.success("提交成功");
+    response.value = res.data;
   } else {
     Message.error("提交失败," + res.message);
   }
