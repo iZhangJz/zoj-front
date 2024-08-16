@@ -25,7 +25,7 @@ export class QuestionSubmitControllerService {
   ): CancelablePromise<BaseResponse_long_ | any> {
     return __request(OpenAPI, {
       method: "POST",
-      url: "/api/question_submit/add",
+      url: "/api/submit/add",
       body: questionSubmitAddRequest,
       errors: {
         401: `Unauthorized`,
@@ -46,7 +46,7 @@ export class QuestionSubmitControllerService {
   ): CancelablePromise<BaseResponse_boolean_ | any> {
     return __request(OpenAPI, {
       method: "POST",
-      url: "/api/question_submit/delete",
+      url: "/api/submit/delete",
       body: deleteRequest,
       errors: {
         401: `Unauthorized`,
@@ -67,7 +67,7 @@ export class QuestionSubmitControllerService {
   ): CancelablePromise<BaseResponse_boolean_ | any> {
     return __request(OpenAPI, {
       method: "POST",
-      url: "/api/question_submit/edit",
+      url: "/api/submit/edit",
       body: questionSubmitEditRequest,
       errors: {
         401: `Unauthorized`,
@@ -87,7 +87,7 @@ export class QuestionSubmitControllerService {
   ): CancelablePromise<BaseResponse_QuestionSubmitVO_> {
     return __request(OpenAPI, {
       method: "GET",
-      url: "/api/question_submit/get/vo",
+      url: "/api/submit/get/vo",
       query: {
         id: id,
       },
@@ -110,7 +110,7 @@ export class QuestionSubmitControllerService {
   ): CancelablePromise<BaseResponse_Page_QuestionSubmit_ | any> {
     return __request(OpenAPI, {
       method: "POST",
-      url: "/api/question_submit/list/page",
+      url: "/api/submit/list/page",
       body: questionSubmitQueryRequest,
       errors: {
         401: `Unauthorized`,
@@ -131,7 +131,7 @@ export class QuestionSubmitControllerService {
   ): CancelablePromise<BaseResponse_Page_QuestionSubmitVO_ | any> {
     return __request(OpenAPI, {
       method: "POST",
-      url: "/api/question_submit/list/page/vo",
+      url: "/api/submit/list/page/vo",
       body: questionSubmitQueryRequest,
       errors: {
         401: `Unauthorized`,
@@ -152,7 +152,7 @@ export class QuestionSubmitControllerService {
   ): CancelablePromise<BaseResponse_Page_QuestionSubmitVO_ | any> {
     return __request(OpenAPI, {
       method: "POST",
-      url: "/api/question_submit/my/list/page/vo",
+      url: "/api/submit/my/list/page/vo",
       body: questionSubmitQueryRequest,
       errors: {
         401: `Unauthorized`,
@@ -173,7 +173,7 @@ export class QuestionSubmitControllerService {
   ): CancelablePromise<BaseResponse_boolean_ | any> {
     return __request(OpenAPI, {
       method: "POST",
-      url: "/api/question_submit/update",
+      url: "/api/submit/update",
       body: questionSubmitUpdateRequest,
       errors: {
         401: `Unauthorized`,

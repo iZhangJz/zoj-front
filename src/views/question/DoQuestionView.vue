@@ -61,24 +61,35 @@
                     </div>
                   </a-form-item>
                   <a-form-item v-if="response.errorInput !== null">
-                    <h3>错误输入:{{ response.errorInput }}</h3>
+                    <div>
+                      <h3>错误用例</h3>
+                      <MdViewer
+                        :value="'```\n' + response.errorInput + '```'"
+                      />
+                    </div>
                   </a-form-item>
-                  <a-form-item v-if="response.errorInput !== null">
-                    <h3>错误输出:{{ response.errorOutput }}</h3>
+                  <a-form-item v-if="response.errorOutput !== null">
+                    <div>
+                      <h3>错误输出</h3>
+                      <MdViewer
+                        :value="'```\n' + response.errorOutput + '```'"
+                      />
+                    </div>
                   </a-form-item>
-                  <a-form-item v-if="response.errorInput !== null">
-                    <h3>正确输出:{{ response.correctOutput }}</h3>
+                  <a-form-item v-if="response.correctOutput !== null">
+                    <div>
+                      <h3>正确输出</h3>
+                      <MdViewer
+                        :value="'```\n' + response.correctOutput + '```'"
+                      />
+                    </div>
                   </a-form-item>
                   <a-form-item>
                     <div>
                       <h3>用户提交代码</h3>
                       <MdViewer
                         :value="
-                          '```' +
-                          submitForm.language +
-                          '\n' +
-                          submitForm.code +
-                          '```'
+                          '```' + submitForm.language + '\n' + lastSubmitCode
                         "
                       />
                     </div>
@@ -161,6 +172,7 @@ const isSubmit = ref(false);
 const question = ref<QuestionVO>();
 const response = ref();
 const store = useStore();
+const lastSubmitCode = ref("");
 const submitForm = ref({
   code: "",
   language: PROGRAMMING_LANGUAGE_MAP.Java,
@@ -203,15 +215,17 @@ const submitCode = async () => {
     Message.error("请输入代码");
     return;
   }
-  const res = await QuestionSubmitControllerService.addQuestionSubmitUsingPost({
-    ...submitForm.value,
-    questionId: props.questionId,
-  });
-  if (res.code === 200) {
+  const submitRes =
+    await QuestionSubmitControllerService.addQuestionSubmitUsingPost({
+      ...submitForm.value,
+      questionId: props.questionId,
+    });
+  if (submitRes.code === 200) {
     Message.success("提交成功");
-    response.value = res.data;
+    response.value = submitRes.data;
+    lastSubmitCode.value = submitForm.value.code;
   } else {
-    Message.error("提交失败," + res.message);
+    Message.error("提交失败," + submitRes.message);
   }
 };
 
