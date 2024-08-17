@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ApiRequestOptions } from "./ApiRequestOptions";
+import store from "@/store";
 
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
 type Headers = Record<string, string>;
@@ -27,6 +28,11 @@ export const OpenAPI: OpenAPIConfig = {
   TOKEN: undefined,
   USERNAME: undefined,
   PASSWORD: undefined,
-  HEADERS: undefined,
+  HEADERS: async (options: ApiRequestOptions): Promise<Headers> => {
+    const token = store.state.user.loginUser.token;
+    return {
+      Authorization: `${token}`,
+    };
+  },
   ENCODE_PATH: undefined,
 };

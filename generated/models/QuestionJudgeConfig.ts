@@ -1,9 +1,5 @@
-/* generated using openapi-typescript-codegen -- do not edit */
-/* istanbul ignore file */
-/* tslint:disable */
 /* eslint-disable */
 export type QuestionJudgeConfig = {
-    memoryLimit?: number;
-    timeLimit?: number;
+  memoryLimit?: number;
+  timeLimit?: number;
 };
-

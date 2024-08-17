@@ -2,9 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type BaseResponse_string_ = {
-    code?: number;
-    data?: string;
+export type JudgeResultResponse = {
+    correctOutput?: string;
+    errorInput?: string;
+    errorOutput?: string;
+    id?: number;
     message?: string;
 };
 
