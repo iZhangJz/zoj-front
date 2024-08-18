@@ -45,16 +45,15 @@
     </template>
     <template #optional="{ record }">
       <a-space>
-        <a-button
-          size="mini"
-          type="primary"
-          :href="`/admin/question/edit/${record.id}`"
-          @click="doUpdate(record)"
-          >修改</a-button
-        >
+        <router-link :to="`/admin/question/edit/${record.id}`">
+          <a-button size="mini" type="primary" @click="doUpdate(record)"
+            >修改
+          </a-button>
+        </router-link>
+
         <a-button size="mini" status="danger" @click="doDelete(record)"
-          >删除</a-button
-        >
+          >删除
+        </a-button>
       </a-space>
     </template>
   </a-table>

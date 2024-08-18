@@ -29,6 +29,10 @@ export default {
     setLoginUser({ commit, state }, payload) {
       commit("updateUser", payload);
     },
+    setUserAvatar({ commit, state }, payload) {
+      console.log(payload);
+      commit("updateUser", { ...state.loginUser, userAvatar: payload });
+    },
   },
   mutations: {
     updateUser(state, payload) {

@@ -62,9 +62,9 @@
         </div>
       </template>
       <template #optional="{ record }">
-        <a-button size="mini" type="primary" :href="`/question/do/${record.id}`"
-          >去答题</a-button
-        >
+        <router-link :to="`/question/do/${record.id}`">
+          <a-button size="mini" type="primary">去答题</a-button>
+        </router-link>
       </template>
     </a-table>
   </div>
@@ -79,6 +79,7 @@ import {
   QuestionQueryRequest,
   QuestionVO,
 } from "../../generated";
+
 /**
  * 初始化搜索参数
  */
