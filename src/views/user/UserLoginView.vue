@@ -56,6 +56,9 @@ const form = reactive({
 const handleSubmit = async () => {
   const res = await UserControllerService.userLoginUsingPost(form);
   if (res.code === 200) {
+    // 将令牌存储到 localStorage
+    const token = res.data.token;
+    localStorage.setItem("jwtToken", token);
     await store.dispatch("user/setLoginUser", res.data);
     await router.push({ path: "/", replace: true });
   } else {

@@ -84,11 +84,11 @@
               </a-space>
             </div>
           </a-modal>
-          <a-avatar trigger-type="mask">
+          <a-avatar trigger-type="mask" :size="50">
             <img alt="avatar" :src="store.state.user.loginUser.userAvatar" />
           </a-avatar>
           <a-dropdown>
-            <a-button type="text">{{
+            <a-button type="text" style="color: black">{{
               store.state.user.loginUser.userName ?? "未登录"
             }}</a-button>
             <template #content>
@@ -99,7 +99,7 @@
               </div>
               <div v-else>
                 <a-doption @click="handleModalClick">上传头像</a-doption>
-                <a-doption>退出登录</a-doption>
+                <a-doption @click="logout">退出登录</a-doption>
               </div>
             </template>
           </a-dropdown>
@@ -135,7 +135,7 @@ const handleOk = async () => {
     file.value.file
   );
   if (res.code == 200) {
-    Message.success("上传成功");
+    Message.success("上传成功,若未显示请尝试刷新页面");
     await store.dispatch("user/setUserAvatar", res.data);
   } else {
     Message.error("上传失败", res.message);
@@ -178,6 +178,19 @@ const beforeUpload = (file) => {
     return false;
   }
   return true;
+};
+
+/**
+ * 用户退出登录
+ */
+const logout = async () => {
+  const res = await UserControllerService.userLogoutUsingPost();
+  if (res.code == 200) {
+    Message.success("退出登录成功");
+    router.push("/user/login");
+  } else {
+    Message.error("退出登录失败", res.message);
+  }
 };
 
 /**

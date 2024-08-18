@@ -11,6 +11,7 @@ export default {
   state: () => ({
     loginUser: {
       userName: "未登录",
+      token: localStorage.getItem("jwtToken") || "",
     },
   }),
   actions: {
@@ -23,7 +24,9 @@ export default {
           ...state.loginUser,
           userName: "未登录",
           userRole: ACCESS_ROLE_ENUM.NOT_LOGIN,
+          token: "", // 登录失败，清空 token
         });
+        localStorage.removeItem("jwtToken"); // 清除 localStorage 中的 token
       }
     },
     setLoginUser({ commit, state }, payload) {

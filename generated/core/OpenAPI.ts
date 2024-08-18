@@ -29,7 +29,7 @@ export const OpenAPI: OpenAPIConfig = {
   USERNAME: undefined,
   PASSWORD: undefined,
   HEADERS: async (options: ApiRequestOptions): Promise<Headers> => {
-    const token = store.state.user.loginUser.token;
+    const token = localStorage.getItem("jwtToken");
     return {
       Authorization: `${token}`,
     };
