@@ -187,6 +187,7 @@ const logout = async () => {
   const res = await UserControllerService.userLogoutUsingPost();
   if (res.code == 200) {
     Message.success("退出登录成功");
+    localStorage.removeItem("jwtToken");
     router.push("/user/login");
   } else {
     Message.error("退出登录失败", res.message);

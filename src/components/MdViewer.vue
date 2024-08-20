@@ -10,6 +10,8 @@
 <script setup lang="ts">
 import gfm from "@bytemd/plugin-gfm";
 import highlight from "@bytemd/plugin-highlight";
+import math from "@bytemd/plugin-math-ssr";
+import "katex/dist/katex.css";
 import "bytemd/dist/index.css";
 import "highlight.js/styles/default.css";
 import "github-markdown-css/github-markdown-light.css";
@@ -19,6 +21,7 @@ import { defineProps, withDefaults } from "vue";
 const plugins = [
   gfm(),
   highlight(),
+  math(),
   // TODO Add more plugins here 可以根据需要添加插件
 ];
 

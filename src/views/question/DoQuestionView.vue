@@ -64,7 +64,7 @@
                     <div>
                       <h3>错误用例</h3>
                       <MdViewer
-                        :value="'```\n' + response.errorInput + '```'"
+                        :value="'```\n' + response.errorInput + '\n ```'"
                       />
                     </div>
                   </a-form-item>
@@ -72,7 +72,7 @@
                     <div>
                       <h3>错误输出</h3>
                       <MdViewer
-                        :value="'```\n' + response.errorOutput + '```'"
+                        :value="'```\n' + response.errorOutput + '\n ```'"
                       />
                     </div>
                   </a-form-item>
@@ -80,7 +80,7 @@
                     <div>
                       <h3>正确输出</h3>
                       <MdViewer
-                        :value="'```\n' + response.correctOutput + '```'"
+                        :value="'```\n' + response.correctOutput + '\n ```'"
                       />
                     </div>
                   </a-form-item>
